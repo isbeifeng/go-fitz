@@ -7,12 +7,19 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 	"testing"
 
 	"github.com/gen2brain/go-fitz"
 )
 
 func TestImage(t *testing.T) {
+
+	err := os.Setenv("FZ_MAX_STORE_VALUE", strconv.Itoa(256<<20))
+	if err != nil {
+		t.Error(err)
+	}
+
 	doc, err := fitz.New(filepath.Join("testdata", "test.pdf"))
 	if err != nil {
 		t.Error(err)
