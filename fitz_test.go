@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/gen2brain/go-fitz"
+	"github.com/isbeifeng/go-fitz"
 )
 
 func TestImage(t *testing.T) {
