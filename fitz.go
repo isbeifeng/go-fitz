@@ -42,7 +42,6 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"strconv"
 	"sync"
 	"unsafe"
 )
@@ -102,17 +101,17 @@ func New(filename string) (f *Document, err error) {
 		return
 	}
 
-	// The maximum size of resource limit, priority read from environment variables,
-	// if not set, default not limited
-	maxStore := C.FZ_STORE_UNLIMITED
-	if value := os.Getenv("FZ_MAX_STORE_VALUE"); len(value) > 0 {
-		v, _ := strconv.Atoi(value)
-		if v > 0 {
-			maxStore = v
-		}
-	}
+	//// The maximum size of resource limit, priority read from environment variables,
+	//// if not set, default not limited
+	//maxStore := C.FZ_STORE_UNLIMITED
+	//if value := os.Getenv("FZ_MAX_STORE_VALUE"); len(value) > 0 {
+	//	v, _ := strconv.Atoi(value)
+	//	if v > 0 {
+	//		maxStore = v
+	//	}
+	//}
 
-	f.ctx = (*C.struct_fz_context)(unsafe.Pointer(C.fz_new_context_imp(nil, nil, C.ulong(maxStore), C.fz_version)))
+	f.ctx = (*C.struct_fz_context)(unsafe.Pointer(C.fz_new_context_imp(nil, nil, C.FZ_STORE_DEFAULT, C.fz_version)))
 	if f.ctx == nil {
 		err = ErrCreateContext
 		return
@@ -142,17 +141,17 @@ func New(filename string) (f *Document, err error) {
 func NewFromMemory(b []byte) (f *Document, err error) {
 	f = &Document{}
 
-	// The maximum size of resource limit, priority read from environment variables,
-	// if not set, default not limited
-	maxStore := C.FZ_STORE_UNLIMITED
-	if value := os.Getenv("FZ_MAX_STORE_VALUE"); len(value) > 0 {
-		v, _ := strconv.Atoi(value)
-		if v > 0 {
-			maxStore = v
-		}
-	}
+	//// The maximum size of resource limit, priority read from environment variables,
+	//// if not set, default not limited
+	//maxStore := C.FZ_STORE_UNLIMITED
+	//if value := os.Getenv("FZ_MAX_STORE_VALUE"); len(value) > 0 {
+	//	v, _ := strconv.Atoi(value)
+	//	if v > 0 {
+	//		maxStore = v
+	//	}
+	//}
 
-	f.ctx = (*C.struct_fz_context)(unsafe.Pointer(C.fz_new_context_imp(nil, nil, C.ulong(maxStore), C.fz_version)))
+	f.ctx = (*C.struct_fz_context)(unsafe.Pointer(C.fz_new_context_imp(nil, nil, C.FZ_STORE_DEFAULT, C.fz_version)))
 	if f.ctx == nil {
 		err = ErrCreateContext
 		return
